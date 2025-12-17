@@ -5,7 +5,7 @@ import { addMembre } from "../../../Services/Membres";
 import { Context } from "../../../Context/ContextProvider";
 
 const FormMembre = ({ onClose }) => {
-  const { err, setErr,setSuccessMsg } = useContext(Context);
+  const { err, setErr, setSuccessMsg } = useContext(Context);
   const [loading, setLoading] = useState(false);
   const [membreData, setMembreData] = useState({
     prenom: "",
@@ -25,17 +25,18 @@ const FormMembre = ({ onClose }) => {
   const MembreSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await addMembre(membreData, setErr, onClose,setSuccessMsg);
+    await addMembre(membreData, setErr, onClose, setSuccessMsg);
     setLoading(false);
     console.log(membreData);
   };
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-      <div className="bg-white w-1/3 p-6 rounded-xl shadow-2xl">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
+      <div className="bg-white w-full max-w-md md:max-w-lg lg:w-1/3 p-6 rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto">
         <h2 className="text-xl font-semibold mb-4">Ajouter un membre</h2>
         <form onSubmit={MembreSubmit}>
           <div className="flex flex-col gap-7">
-            <div className="flex justify-between gap-5">
+            <div className="flex flex-col md:flex-row justify-between gap-5">
               <Input
                 type="text"
                 name={"nom"}
@@ -80,19 +81,19 @@ const FormMembre = ({ onClose }) => {
                 value={membreData.status}
                 onChange={handleChange}
                 className="
-          w-full
-          bg-gray-100
-          border border-black
-          rounded-lg
-          px-3 py-2
-          shadow-md
-          placeholder-gray-500
-          focus:outline-none
-          focus:bg-white
-          focus:ring-2 focus:ring-indigo-500
-          transition
-          pl-10
-        "
+                  w-full
+                  bg-gray-100
+                  border border-black
+                  rounded-lg
+                  px-3 py-2
+                  shadow-md
+                  placeholder-gray-500
+                  focus:outline-none
+                  focus:bg-white
+                  focus:ring-2 focus:ring-indigo-500
+                  transition
+                  pl-10
+                "
               >
                 <option value="active">Active</option>
                 <option value="No Active">No active</option>
@@ -122,21 +123,21 @@ const FormMembre = ({ onClose }) => {
                 </div>
               ))}
             </div>
-            <div className="flex justify-end gap-2 mt-2">
+            <div className="flex flex-col sm:flex-row justify-end gap-2 mt-2">
               <button
                 type="button"
                 onClick={() => {
                   setErr([]);
                   onClose();
                 }}
-                className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+                className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 w-full sm:w-auto"
               >
                 Annuler
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-2 rounded bg-[var(--primary-color)] text-white hover:bg-indigo-700"
+                className="px-4 py-2 rounded bg-[var(--primary-color)] text-white hover:bg-indigo-700 w-full sm:w-auto flex items-center justify-center"
               >
                 {loading ? (
                   <svg
@@ -160,7 +161,7 @@ const FormMembre = ({ onClose }) => {
                     ></path>
                   </svg>
                 ) : null}
-                {loading ? "" : "Ajouter"}
+                {loading ? "Ajout en cours..." : "Ajouter"}
               </button>
             </div>
           </div>

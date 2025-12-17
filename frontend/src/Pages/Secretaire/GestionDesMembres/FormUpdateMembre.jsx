@@ -1,34 +1,33 @@
-import { Flag, Mail, Phone, User } from 'lucide-react';
-import React, { useContext, useState } from 'react'
-import { Context } from '../../../Context/ContextProvider';
-import Input from '../../../components/Input';
-import { updateMembre } from '../../../Services/Membres';
+import { Flag, Mail, Phone, User } from "lucide-react";
+import React, { useContext, useState } from "react";
+import { Context } from "../../../Context/ContextProvider";
+import Input from "../../../components/Input";
+import { updateMembre } from "../../../Services/Membres";
 
-const FormUpdateMembre = ({membreData,onClose}) => {
-
- const [membreUpdated, setmembreUpdated] = useState(membreData);
- const [loading,setLoading] = useState(false)
- const { err, setErr,setSuccessMsg } = useContext(Context);
+const FormUpdateMembre = ({ membreData, onClose }) => {
+  const [membreUpdated, setmembreUpdated] = useState(membreData);
+  const [loading, setLoading] = useState(false);
+  const { err, setErr, setSuccessMsg } = useContext(Context);
 
   const handleChange = (e) => {
     setmembreUpdated({ ...membreUpdated, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async(e) => {
-    setLoading(true)
+  const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
-    await updateMembre(membreUpdated,setErr,setSuccessMsg)
-    console.log("Updated membre:", membreUpdated,onClose);
-    setLoading(false)
+    await updateMembre(membreUpdated, setErr, setSuccessMsg);
+    console.log("Updated membre:", membreUpdated, onClose);
+    setLoading(false);
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-      <div className="bg-white w-1/3 p-6 rounded-xl shadow-2xl">
-        <h2 className="text-xl font-semibold mb-4">Ajouter un membre</h2>
+    <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
+      <div className="bg-white w-full max-w-md md:max-w-lg lg:w-1/3 p-6 rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto">
+        <h2 className="text-xl font-semibold mb-4">Modifier un membre</h2>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-7">
-            <div className="flex justify-between gap-5">
+            <div className="flex flex-col md:flex-row justify-between gap-5">
               <Input
                 type="text"
                 name={"nom"}
@@ -73,19 +72,19 @@ const FormUpdateMembre = ({membreData,onClose}) => {
                 value={membreUpdated.status}
                 onChange={handleChange}
                 className="
-          w-full
-          bg-gray-100
-          border border-black
-          rounded-lg
-          px-3 py-2
-          shadow-md
-          placeholder-gray-500
-          focus:outline-none
-          focus:bg-white
-          focus:ring-2 focus:ring-indigo-500
-          transition
-          pl-10
-        "
+                  w-full
+                  bg-gray-100
+                  border border-black
+                  rounded-lg
+                  px-3 py-2
+                  shadow-md
+                  placeholder-gray-500
+                  focus:outline-none
+                  focus:bg-white
+                  focus:ring-2 focus:ring-indigo-500
+                  transition
+                  pl-10
+                "
               >
                 <option value="active">Active</option>
                 <option value="NoActive">No active</option>
@@ -115,21 +114,21 @@ const FormUpdateMembre = ({membreData,onClose}) => {
                 </div>
               ))}
             </div>
-            <div className="flex justify-end gap-2 mt-2">
+            <div className="flex flex-col sm:flex-row justify-end gap-2 mt-2">
               <button
                 type="button"
-                onClick={()=>{
-                    setErr([])
-                    onClose()
+                onClick={() => {
+                  setErr([]);
+                  onClose();
                 }}
-                className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+                className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 w-full sm:w-auto"
               >
                 Annuler
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-2 rounded bg-[var(--primary-color)] text-white hover:bg-indigo-700"
+                className="px-4 py-2 rounded bg-[var(--primary-color)] text-white hover:bg-indigo-700 w-full sm:w-auto flex items-center justify-center"
               >
                 {loading ? (
                   <svg
@@ -153,7 +152,7 @@ const FormUpdateMembre = ({membreData,onClose}) => {
                     ></path>
                   </svg>
                 ) : null}
-                {loading ? "" : "Modifer"}
+                {loading ? "Modification en cours..." : "Modifier"}
               </button>
             </div>
           </div>
@@ -161,6 +160,6 @@ const FormUpdateMembre = ({membreData,onClose}) => {
       </div>
     </div>
   );
-}
+};
 
-export default FormUpdateMembre
+export default FormUpdateMembre;
