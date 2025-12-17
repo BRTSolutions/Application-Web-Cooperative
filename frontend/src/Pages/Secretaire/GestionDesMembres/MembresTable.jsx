@@ -3,7 +3,7 @@ import { Edit, Trash2, Users } from "lucide-react";
 import { Context } from "../../../Context/ContextProvider";
 import { Link } from "react-router-dom";
 import FormUpdateMembre from "./FormUpdateMembre";
-import { deleteMembre } from "../../../Services/Membres";
+import { deleteMembre, getAllMembres } from "../../../Services/Membres";
 // import { getAllMembres } from "../../../Services/Membres";
 
 const MembresTable = () => {
@@ -16,88 +16,7 @@ const MembresTable = () => {
 
   useEffect(() => {
     const fetchMembres = async () => {
-      const data = [
-        {
-          id: 1,
-          nom: "Gnaoui",
-          prenom: "Zakaria",
-          email: "zak@gmail.com",
-          telephone: "0649961829",
-          status: "active",
-        },
-        {
-          id: 2,
-          nom: "El Amrani",
-          prenom: "Anis",
-          email: "anis@mail.com",
-          telephone: "0612345678",
-          status: "active",
-        },
-        {
-          id: 3,
-          nom: "Benali",
-          prenom: "Youssef",
-          email: "youssef@mail.com",
-          telephone: "0623456789",
-          status: "NoActive",
-        },
-        {
-          id: 4,
-          nom: "Alaoui",
-          prenom: "Sara",
-          email: "sara@mail.com",
-          telephone: "0634567890",
-          status: "active",
-        },
-        {
-          id: 5,
-          nom: "Chakir",
-          prenom: "Imane",
-          email: "imane@mail.com",
-          telephone: "0656789012",
-          status: "NoActive",
-        },
-        {
-          id: 6,
-          nom: "Gnaoui",
-          prenom: "Zakaria",
-          email: "zak@gmail.com",
-          telephone: "0649961829",
-          status: "active",
-        },
-        {
-          id: 7,
-          nom: "El Amrani",
-          prenom: "Anis",
-          email: "anis@mail.com",
-          telephone: "0612345678",
-          status: "active",
-        },
-        {
-          id: 8,
-          nom: "Benali",
-          prenom: "Youssef",
-          email: "youssef@mail.com",
-          telephone: "0623456789",
-          status: "NoActive",
-        },
-        {
-          id: 9,
-          nom: "Alaoui",
-          prenom: "Sara",
-          email: "sara@mail.com",
-          telephone: "0634567890",
-          status: "active",
-        },
-        {
-          id: 10,
-          nom: "Chakir",
-          prenom: "Imane",
-          email: "imane@mail.com",
-          telephone: "0656789012",
-          status: "NoActive",
-        },
-      ];
+      const data = await getAllMembres(setErr);
       setAllMembres(data);
     };
     fetchMembres();
