@@ -18,7 +18,6 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Mobile Hamburger Button - Visible only on small screens */}
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
         className="md:hidden fixed top-4 left-4 z-50 bg-[#0b0b3b] text-white p-2 rounded-lg shadow-lg"
@@ -26,7 +25,6 @@ const Sidebar = () => {
         <Menu size={24} />
       </button>
 
-      {/* Backdrop for Mobile */}
       {isMobileOpen && (
         <div
           className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
@@ -62,7 +60,6 @@ const Sidebar = () => {
             >
               {isCollapsed ? <Menu size={20} /> : <X size={20} />}
             </button>
-            {/* Close button for mobile */}
             <button
               onClick={() => setIsMobileOpen(false)}
               className="md:hidden text-white/70 hover:text-white transition"
