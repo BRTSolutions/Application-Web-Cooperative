@@ -34,25 +34,25 @@ const LoginForm = () => {
 
         <form className="space-y-4" onSubmit={handleLogin}>
           <div>
-            <label className="block text-sm mb-1">Adresse email</label>
             <Input
               type={"email"}
               name={"email"}
               value={loginData.email}
               onChange={handleChange}
               placeholder={"email@exemple.com"}
+              LabelName={"Adress email"}
               icon={<Mail />}
             />
           </div>
 
           <div>
-            <label className="block text-sm mb-1">Mot de passe</label>
             <Input
               type={"password"}
               name={"password"}
               value={loginData.password}
               onChange={handleChange}
               placeholder={"******************"}
+              LabelName={"mot de pass"}
               icon={<Lock />}
             />
           </div>
