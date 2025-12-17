@@ -29,7 +29,6 @@ const MembresTable = () => {
 
   const itemsPerPage = windowWidth < 768 ? 4 : 6;
 
-  // Reset currentPage if it exceeds totalPages when itemsPerPage changes
   useEffect(() => {
     const totalPages = Math.ceil(allMembres.length / itemsPerPage);
     if (currentPage > totalPages && totalPages > 0) {
@@ -50,7 +49,7 @@ const MembresTable = () => {
         </div>
       )}
 
-      {/* Desktop Table View */}
+      {/* Desktop Tableau vue */}
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full border-collapse">
           <thead className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm uppercase">
@@ -132,7 +131,7 @@ const MembresTable = () => {
         </table>
       </div>
 
-      {/* Mobile/Tablet Card View */}
+      {/* Mobile/Tablet vue */}
       <div className="md:hidden space-y-4 p-4">
         {allMembres.length === 0 ? (
           <div className="text-center py-16 text-gray-500">
