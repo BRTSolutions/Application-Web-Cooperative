@@ -9,7 +9,20 @@ export const postDocuments = async (
   try {
     await Api.post(`/membres/${membreId}/documents`, formData);
     setSuccessMsg("Documents uploadés avec succès");
-    setErr([])
+    setErr([]);
+  } catch (err) {
+    if (err.response?.data?.errors) {
+      setErr(err.response.data.errors);
+    } else {
+      setErr(["Erreur lors de l'upload des documents"]);
+    }
+  }
+};
+
+export const getMembreDocuments = async (membreId, setErr) => {
+  try {
+    const res = await Api.get(`/membres/${membreId}/documents`);
+    return res.data;
   } catch (err) {
     if (err.response?.data?.errors) {
       setErr(err.response.data.errors);

@@ -13,17 +13,49 @@ const FormUploadDocuments = ({ membreId, onClose }) => {
   });
 
   const handleChange = (e) => {
-    setFiles({ ...files, [e.target.name]: e.target.files[0] });
+    const { name, files: selectedFiles } = e.target;
+    const file = selectedFiles[0];
+    if (!file) return;
+
+    // Validation type
+    const allowedTypes = {
+      rectoCIN: ["image/jpeg", "image/png", "application/pdf"],
+      versoCIN: ["image/jpeg", "image/png", "application/pdf"],
+      photo: ["image/jpeg", "image/png"],
+      receipt: ["image/jpeg", "image/png", "application/pdf"],
+    };
+
+    if (!allowedTypes[name].includes(file.type)) {
+      setErr([`Type de fichier invalide pour ${name}`]);
+      return;
+    }
+
+    // Validation taille max 2MB
+    const maxSize = 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+      setErr([`Le fichier ${name} est trop lourd (max 2MB)`]);
+      return;
+    }
+
+    setErr([]);
+    setFiles({ ...files, [name]: file });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!files.rectoCIN || !files.versoCIN) {
+      setErr(["Veuillez uploader les deux faces de la CIN."]);
+      return;
+    }
+
     const formData = new FormData();
-    formData.append("cin", files.cin);
-    formData.append("photo", files.photo);
-    formData.append("receipt", files.receipt);
+    formData.append("rectoCIN", files.rectoCIN);
+    formData.append("versoCIN", files.versoCIN);
+    if (files.photo) formData.append("photo", files.photo);
+    if (files.receipt) formData.append("receipt", files.receipt);
     formData.append("membre_id", membreId);
+
     await postDocuments(membreId, formData, setErr, setSuccessMsg);
   };
 
@@ -46,8 +78,15 @@ const FormUploadDocuments = ({ membreId, onClose }) => {
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <InputFile
-            label="Carte Nationale (CIN)"
-            name="cin"
+            label="CIN Recto"
+            name="rectoCIN"
+            onChange={handleChange}
+            accept="image/*,.pdf"
+          />
+
+          <InputFile
+            label="CIN Verso"
+            name="versoCIN"
             onChange={handleChange}
             accept="image/*,.pdf"
           />
@@ -65,6 +104,7 @@ const FormUploadDocuments = ({ membreId, onClose }) => {
             onChange={handleChange}
             accept="image/*,.pdf"
           />
+
           {err.map((err, index) => (
             <div
               key={index}
