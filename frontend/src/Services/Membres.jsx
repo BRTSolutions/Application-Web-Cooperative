@@ -40,17 +40,7 @@ export const updateMembre = async (membreUpdated, setErr, onClose,setSuccessMsg)
   }
 };
 
-export const deleteMembre = async (id, setErr,setSuccessMsg) => {
-  try {
-    await Api.delete(`/delete_membre/${id}`);
-    setErr([]);
-    setSuccessMsg("Membre supprimé avec succès !");
-     setTimeout(() => setSuccessMsg(""), 3000);
-  } catch (err) {
-    handleErrors(err, setErr);
-    return false;
-  }
-};
+
 
 const handleErrors = (err, setErr) => {
   if (err.response?.data?.errors) {

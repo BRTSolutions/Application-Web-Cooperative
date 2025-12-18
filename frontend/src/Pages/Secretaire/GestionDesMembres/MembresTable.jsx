@@ -1,21 +1,81 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Edit, Trash2, Users } from "lucide-react";
+import { ChevronFirst, ChevronLast, Edit, Eye, Upload, Users } from "lucide-react";
 import { Context } from "../../../Context/ContextProvider";
 import { Link } from "react-router-dom";
 import FormUpdateMembre from "./FormUpdateMembre";
-import { deleteMembre, getAllMembres } from "../../../Services/Membres";
+// import { getAllMembres } from "../../../Services/Membres";
+import FormViewMembre from "./FormViewMembre";
+import FormUploadDocuments from "./FormUploadDocuments";
 
 const MembresTable = () => {
-  const { allMembres, setAllMembres, setErr, successMsg, setSuccessMsg } =
-    useContext(Context);
+  const { allMembres, setAllMembres, successMsg } = useContext(Context);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedMembre, setSelectedMembre] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [showMembre, setShowMembre] = useState(false);
+  const [showUploadForm, setShowUploadForm] = useState(false);
 
   useEffect(() => {
     const fetchMembres = async () => {
-      const data = await getAllMembres(setErr);
+      const data = [
+        {
+          id: 1,
+          nom: "Ahmed",
+          prenom: "Yassine",
+          email: "ahmed.yassine@example.com",
+          telephone: "0601234567",
+          status: "active",
+        },
+        {
+          id: 2,
+          nom: "Sara",
+          prenom: "Amina",
+          email: "sara.amina@example.com",
+          telephone: "0612345678",
+          status: "inactive",
+        },
+        {
+          id: 3,
+          nom: "Karim",
+          prenom: "Hassan",
+          email: "karim.hassan@example.com",
+          telephone: "0623456789",
+          status: "active",
+        },
+        {
+          id: 4,
+          nom: "Salma",
+          prenom: "Laila",
+          email: "salma.laila@example.com",
+          telephone: "0634567890",
+          status: "inactive",
+        },
+        {
+          id: 5,
+          nom: "Omar",
+          prenom: "Rachid",
+          email: "omar.rachid@example.com",
+          telephone: "0645678901",
+          status: "active",
+        },
+        {
+          id: 6,
+          nom: "Imane",
+          prenom: "Khadija",
+          email: "imane.khadija@example.com",
+          telephone: "0656789012",
+          status: "active",
+        },
+        {
+          id: 7,
+          nom: "Youssef",
+          prenom: "Mehdi",
+          email: "youssef.mehdi@example.com",
+          telephone: "0667890123",
+          status: "inactive",
+        },
+      ];
       setAllMembres(data);
     };
     fetchMembres();
@@ -23,8 +83,8 @@ const MembresTable = () => {
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const itemsPerPage = windowWidth < 768 ? 4 : 6;
@@ -117,10 +177,21 @@ const MembresTable = () => {
                         className="flex items-center justify-center w-10 h-10 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 hover:text-red-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-110"
                         title="Supprimer"
                         onClick={() => {
-                          deleteMembre(membre, setErr, setSuccessMsg);
+                          setShowMembre(true);
+                          setSelectedMembre(membre);
                         }}
                       >
-                        <Trash2 className="h-5 w-5" />
+                        <Eye className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedMembre(membre);
+                          setShowUploadForm(true);
+                        }}
+                        className="flex items-center justify-center w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl hover:bg-emerald-200 transition"
+                        title="Uploader documents"
+                      >
+                        <Upload/>
                       </button>
                     </div>
                   </td>
@@ -164,8 +235,12 @@ const MembresTable = () => {
                 )}
               </div>
               <div className="space-y-1 text-sm text-gray-600">
-                <p><strong>Email:</strong> {membre.email}</p>
-                <p><strong>Téléphone:</strong> {membre.telephone}</p>
+                <p>
+                  <strong>Email:</strong> {membre.email}
+                </p>
+                <p>
+                  <strong>Téléphone:</strong> {membre.telephone}
+                </p>
               </div>
               <div className="flex justify-end gap-2 mt-4">
                 <button
@@ -179,14 +254,25 @@ const MembresTable = () => {
                   <Edit className="h-5 w-5" />
                 </button>
                 <button
-                  className="flex items-center justify-center w-10 h-10 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 hover:text-red-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-110"
-                  title="Supprimer"
+                  className="flex items-center justify-center w-10 h-10 bg-red-100 text-blue-600 rounded-xl hover:bg-red-200 hover:text-red-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-110"
+                  title="voir"
                   onClick={() => {
-                    deleteMembre(membre, setErr, setSuccessMsg);
+                    setShowMembre(true);
+                    setSelectedMembre(membre);
                   }}
                 >
-                  <Trash2 className="h-5 w-5" />
+                  <Eye className="h-5 w-5" />
                 </button>
+                 <button
+                        onClick={() => {
+                          setSelectedMembre(membre);
+                          setShowUploadForm(true);
+                        }}
+                        className="flex items-center justify-center w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl hover:bg-emerald-200 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-110"
+                        title="Uploader documents"
+                      >
+                        <Upload/>
+                      </button>
               </div>
             </div>
           ))
@@ -200,7 +286,7 @@ const MembresTable = () => {
           onClick={() => setCurrentPage(currentPage - 1)}
           className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50 text-sm md:text-base"
         >
-          Précédente
+          <ChevronFirst/>
         </button>
 
         {[...Array(totalPages)].map((_, index) => (
@@ -222,7 +308,7 @@ const MembresTable = () => {
           onClick={() => setCurrentPage(currentPage + 1)}
           className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50 text-sm md:text-base"
         >
-          Suivant
+          <ChevronLast/>
         </button>
       </div>
 
@@ -230,6 +316,20 @@ const MembresTable = () => {
         <FormUpdateMembre
           membreData={selectedMembre}
           onClose={() => setShowUpdateForm(false)}
+        />
+      )}
+
+      {showMembre && (
+        <FormViewMembre
+          membreData={selectedMembre}
+          onClose={() => setShowMembre(false)}
+        />
+      )}
+
+      {showUploadForm && (
+        <FormUploadDocuments
+          membreId={selectedMembre.id}
+          onClose={() => setShowUploadForm(false)}
         />
       )}
     </div>
