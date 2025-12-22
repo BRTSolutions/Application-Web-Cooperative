@@ -11,6 +11,7 @@ const MembresTable = () => {
   const { allMembres, setAllMembres, successMsg } = useContext(Context);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedMembre, setSelectedMembre] = useState(null);
+  const [loading,setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [showMembre, setShowMembre] = useState(false);
@@ -18,7 +19,9 @@ const MembresTable = () => {
 
   useEffect(() => {
     const fetchMembres = async () => {
-      const data = [
+      setLoading(true)
+      try{
+        const data = [
         {
           id: 1,
           nom: "Ahmed",
@@ -76,7 +79,14 @@ const MembresTable = () => {
           status: "inactive",
         },
       ];
+      await new Promise((res) => setTimeout(res, 1000));
       setAllMembres(data);
+      }catch(err){
+        console.log(err)
+      } finally {
+        setLoading(false);
+      }
+      
     };
     fetchMembres();
   }, []);
@@ -100,6 +110,15 @@ const MembresTable = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentMembres = allMembres.slice(startIndex, endIndex);
+
+
+    if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white shadow-xl rounded-2xl border border-gray-200">

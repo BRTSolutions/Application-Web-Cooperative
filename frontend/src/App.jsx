@@ -7,6 +7,7 @@ import Dashboard from "./Pages/Secretaire/Dashboard/dashboard";
 import Produits from "./Pages/Secretaire/GestionDesProduits/Produits";
 import Reunions from "./Pages/Secretaire/GestionsDesReunions/Reunions";
 import Profil from "./Pages/Secretaire/Profil/Profil";
+import ProduuitFinis from "./Pages/Secretaire/GestionDesProduitsFini/ProduitsFinis";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard/>}/>
             <Route path="membre" element={<Membres/>}/>
             <Route path="produits" element={<Produits/>}/>
+            <Route path="produits_finis" element={<ProduuitFinis/>}/>
             <Route path="reunions" element={<Reunions/>}/>
             <Route path="profil" element={<Profil/>}/>
             </Route>

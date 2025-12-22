@@ -110,6 +110,17 @@ const Sidebar = () => {
               />
             </Link>
             <Link
+              to={"/secretaire/produits_finis"}
+              onClick={() => setIsMobileOpen(false)}
+            >
+              <MenuItem
+                icon={<Package size={20} />}
+                text="Produits finis"
+                pageName={"produits_finis"}
+                isCollapsed={isCollapsed}
+              />
+            </Link>
+            <Link
               to={"/secretaire/reunions"}
               onClick={() => setIsMobileOpen(false)}
             >

@@ -1,74 +1,99 @@
-import { Flag, Mail, Phone, User } from "lucide-react";
 import React, { useContext, useState } from "react";
 import { Context } from "../../../Context/ContextProvider";
 import Input from "../../../components/Input";
-import { updateMembre } from "../../../Services/Membres";
+import { BookMinus, CircleDollarSign, Mail, Phone, User, UserCheck, Warehouse } from "lucide-react";
+import { addProduitFini } from "../../../Services/ProduitFini";
 
-const FormUpdateMembre = ({ membreData, onClose }) => {
-  const [membreUpdated, setmembreUpdated] = useState(membreData);
-  const [loading, setLoading] = useState(false);
+const FormAddProduitFini = ({ onClose }) => {
   const { err, setErr, setSuccessMsg } = useContext(Context);
+  const [loading, setLoading] = useState(false);
+  const [PfData, setPfData] = useState({
+    nom: "",
+    reference: "",
+    categorie: "",
+    prix: 0,
+    stock: 0,
+    statut: "disponible",
+  });
 
   const handleChange = (e) => {
-    setmembreUpdated({ ...membreUpdated, [e.target.name]: e.target.value });
+    setPfData({
+      ...PfData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = async (e) => {
-    setLoading(true);
+  const PfSubmit = async (e) => {
     e.preventDefault();
-    await updateMembre(membreUpdated, setErr,onClose, setSuccessMsg,);
-    setLoading(false);
+    const dataToSend = {
+    ...PfData,
+    dateMiseAJour: new Date().toISOString(),
   };
-
+    setLoading(true);
+    await addProduitFini(dataToSend, setErr, onClose, setSuccessMsg);
+    setLoading(false);
+    console.log(PfData);
+  };
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
       <div className="bg-white w-full max-w-md md:max-w-lg lg:w-1/3 p-6 rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto">
-        <h2 className="text-xl font-semibold mb-4">Modifier un membre</h2>
-        <form onSubmit={handleSubmit}>
+        <h2 className="text-xl font-semibold mb-4">Ajouter un produit fini</h2>
+        <form onSubmit={PfSubmit}>
           <div className="flex flex-col gap-7">
             <div className="flex flex-col md:flex-row justify-between gap-5">
               <Input
                 type="text"
-                name={"nom"}
-                value={membreUpdated.nom}
+                name={"reference"}
+                value={PfData.reference}
                 onChange={handleChange}
-                placeholder={"Nom"}
+                placeholder={"Reférence"}
                 icon={<User />}
-                LabelName={"Nom"}
+                LabelName={"Reférence"}
               />
               <Input
                 type="text"
-                name={"prenom"}
-                value={membreUpdated.prenom}
+                name={"nom"}
+                value={PfData.nom}
                 onChange={handleChange}
-                placeholder={"Prenom"}
+                placeholder={"Nom de produit fini"}
                 icon={<User />}
-                LabelName={"Prenom"}
+                LabelName={"Nom de produit fini"}
               />
             </div>
             <Input
-              type="email"
-              name={"email"}
-              value={membreUpdated.email}
+              type="text"
+              name={"categorie"}
+              value={PfData.categorie}
               onChange={handleChange}
-              placeholder={"Email"}
-              icon={<Mail />}
-              LabelName={"Email"}
+              placeholder={"Catégorie"}
+              icon={<BookMinus />}
+              LabelName={"Catégorie"}
             />
-            <Input
-              type="tel"
-              name={"telephone"}
-              value={membreUpdated.telephone}
-              onChange={handleChange}
-              placeholder={"Telephone"}
-              icon={<Phone />}
-              LabelName={"Telephone"}
-            />
+            <div className="flex flex-col md:flex-row justify-between gap-5">
+              <Input
+                type="number"
+                name={"prix"}
+                value={PfData.prix}
+                onChange={handleChange}
+                placeholder={"Prix"}
+                icon={<CircleDollarSign />}
+                LabelName={"Prix"}
+              />
+              <Input
+                type="number"
+                name={"stock"}
+                value={PfData.stock}
+                onChange={handleChange}
+                placeholder={"Stock"}
+                icon={<Warehouse />}
+                LabelName={"Stock"}
+              />
+            </div>
 
             <div>
               <select
-                name="status"
-                value={membreUpdated.status}
+                name="statut"
+                value={PfData.statut}
                 onChange={handleChange}
                 className="
                   w-full
@@ -85,8 +110,8 @@ const FormUpdateMembre = ({ membreData, onClose }) => {
                   pl-10
                 "
               >
-                <option value="active">Active</option>
-                <option value="NoActive">No active</option>
+                <option value="disponible">disponible</option>
+                <option value="indisponible">indisponible</option>
               </select>
             </div>
             <div>
@@ -151,7 +176,7 @@ const FormUpdateMembre = ({ membreData, onClose }) => {
                     ></path>
                   </svg>
                 ) : null}
-                {loading ? "Modification en cours..." : "Modifier"}
+                {loading ? "Ajout en cours..." : "Ajouter"}
               </button>
             </div>
           </div>
@@ -161,4 +186,4 @@ const FormUpdateMembre = ({ membreData, onClose }) => {
   );
 };
 
-export default FormUpdateMembre;
+export default FormAddProduitFini;

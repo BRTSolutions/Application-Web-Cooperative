@@ -1,74 +1,83 @@
-import { Flag, Mail, Phone, User } from "lucide-react";
 import React, { useContext, useState } from "react";
 import { Context } from "../../../Context/ContextProvider";
+import { updateProduit } from "../../../Services/produits";
 import Input from "../../../components/Input";
-import { updateMembre } from "../../../Services/Membres";
+import { BookMinus, CircleDollarSign, Flag, Mail, Phone, User, Warehouse } from "lucide-react";
 
-const FormUpdateMembre = ({ membreData, onClose }) => {
-  const [membreUpdated, setmembreUpdated] = useState(membreData);
-  const [loading, setLoading] = useState(false);
-  const { err, setErr, setSuccessMsg } = useContext(Context);
-
-  const handleChange = (e) => {
-    setmembreUpdated({ ...membreUpdated, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-    await updateMembre(membreUpdated, setErr,onClose, setSuccessMsg,);
-    setLoading(false);
-  };
-
+const FormUpdateProduct = ({ produitData, onClose }) => {
+      const [produitUpdated, setProduitUpdated] = useState(produitData);
+      const [loading, setLoading] = useState(false);
+      const { err, setErr, setSuccessMsg } = useContext(Context);
+    
+      const handleChange = (e) => {
+        setProduitUpdated({ ...produitUpdated, [e.target.name]: e.target.value });
+      };
+    
+      const handleSubmit = async (e) => {
+        setLoading(true);
+        e.preventDefault();
+        await updateProduit(produitData, setErr, setSuccessMsg);
+        console.log("Updated produit:", produitData, onClose);
+        setLoading(false);
+      }
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
       <div className="bg-white w-full max-w-md md:max-w-lg lg:w-1/3 p-6 rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto">
-        <h2 className="text-xl font-semibold mb-4">Modifier un membre</h2>
+        <h2 className="text-xl font-semibold mb-4">Modifier un produit</h2>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-7">
             <div className="flex flex-col md:flex-row justify-between gap-5">
+                <Input
+                type="text"
+                name={"reference"}
+                value={produitUpdated.reference}
+                onChange={handleChange}
+                placeholder={"Réference"}
+                icon={<User />}
+                LabelName={"Réference"}
+              />
               <Input
                 type="text"
                 name={"nom"}
-                value={membreUpdated.nom}
+                value={produitUpdated.nom}
                 onChange={handleChange}
-                placeholder={"Nom"}
+                placeholder={"Nom de produit"}
                 icon={<User />}
-                LabelName={"Nom"}
-              />
-              <Input
-                type="text"
-                name={"prenom"}
-                value={membreUpdated.prenom}
-                onChange={handleChange}
-                placeholder={"Prenom"}
-                icon={<User />}
-                LabelName={"Prenom"}
+                LabelName={"Nom de produit"}
               />
             </div>
             <Input
-              type="email"
-              name={"email"}
-              value={membreUpdated.email}
+              type="text"
+              name={"categorie"}
+              value={produitUpdated.categorie   }
               onChange={handleChange}
-              placeholder={"Email"}
-              icon={<Mail />}
-              LabelName={"Email"}
+              placeholder={"catégorie"}
+              icon={<BookMinus />}
+              LabelName={"catégorie"}
             />
             <Input
-              type="tel"
-              name={"telephone"}
-              value={membreUpdated.telephone}
+              type="number"
+              name={"prix"}
+              value={produitUpdated.prix}
               onChange={handleChange}
-              placeholder={"Telephone"}
-              icon={<Phone />}
-              LabelName={"Telephone"}
+              placeholder={"Prix"}
+              icon={<CircleDollarSign />}
+              LabelName={"Prix"}
+            />
+            <Input
+              type="number"
+              name={"stock"}
+              value={produitUpdated.stock}
+              onChange={handleChange}
+              placeholder={"Stock"}
+              icon={<Warehouse />}
+              LabelName={"Stock"}
             />
 
             <div>
               <select
-                name="status"
-                value={membreUpdated.status}
+                name="statut"
+                value={produitUpdated.statut}
                 onChange={handleChange}
                 className="
                   w-full
@@ -85,8 +94,8 @@ const FormUpdateMembre = ({ membreData, onClose }) => {
                   pl-10
                 "
               >
-                <option value="active">Active</option>
-                <option value="NoActive">No active</option>
+                <option value="disponible">Disponible</option>
+                <option value="indisponible">Indisponible</option>
               </select>
             </div>
             <div>
@@ -161,4 +170,4 @@ const FormUpdateMembre = ({ membreData, onClose }) => {
   );
 };
 
-export default FormUpdateMembre;
+export default FormUpdateProduct;

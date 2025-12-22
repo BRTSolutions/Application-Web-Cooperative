@@ -1,74 +1,95 @@
-import { Flag, Mail, Phone, User } from "lucide-react";
 import React, { useContext, useState } from "react";
 import { Context } from "../../../Context/ContextProvider";
 import Input from "../../../components/Input";
-import { updateMembre } from "../../../Services/Membres";
+import {
+  BookMinus,
+  CircleDollarSign,
+  Flag,
+  Mail,
+  Phone,
+  User,
+  Warehouse,
+} from "lucide-react";
+import { updateProduitFini } from "../../../Services/ProduitFini";
 
-const FormUpdateMembre = ({ membreData, onClose }) => {
-  const [membreUpdated, setmembreUpdated] = useState(membreData);
+const FormUpdateProduitFini = ({ PfData, onClose }) => {
+  const [PfUpdated, setPfUpdated] = useState(PfData);
   const [loading, setLoading] = useState(false);
   const { err, setErr, setSuccessMsg } = useContext(Context);
 
   const handleChange = (e) => {
-    setmembreUpdated({ ...membreUpdated, [e.target.name]: e.target.value });
+    setPfUpdated({ ...PfUpdated, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     setLoading(true);
+    const dataToSend = {
+      ...PfData,
+      dateMiseAJour: new Date().toISOString(),
+    };
     e.preventDefault();
-    await updateMembre(membreUpdated, setErr,onClose, setSuccessMsg,);
+    await updateProduitFini(dataToSend, setErr, setSuccessMsg);
+    console.log("Updated produit fini:", PfData, onClose);
     setLoading(false);
   };
-
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
       <div className="bg-white w-full max-w-md md:max-w-lg lg:w-1/3 p-6 rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto">
-        <h2 className="text-xl font-semibold mb-4">Modifier un membre</h2>
+        <h2 className="text-xl font-semibold mb-4">Modifier un produit fini</h2>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-7">
             <div className="flex flex-col md:flex-row justify-between gap-5">
               <Input
                 type="text"
-                name={"nom"}
-                value={membreUpdated.nom}
+                name={"reference"}
+                value={PfUpdated.reference}
                 onChange={handleChange}
-                placeholder={"Nom"}
+                placeholder={"Réference"}
                 icon={<User />}
-                LabelName={"Nom"}
+                LabelName={"Réference"}
               />
               <Input
                 type="text"
-                name={"prenom"}
-                value={membreUpdated.prenom}
+                name={"nom"}
+                value={PfUpdated.nom}
                 onChange={handleChange}
-                placeholder={"Prenom"}
+                placeholder={"Nom de produit fini"}
                 icon={<User />}
-                LabelName={"Prenom"}
+                LabelName={"Nom de produit fini"}
               />
             </div>
             <Input
-              type="email"
-              name={"email"}
-              value={membreUpdated.email}
+              type="text"
+              name={"categorie"}
+              value={PfUpdated.categorie}
               onChange={handleChange}
-              placeholder={"Email"}
-              icon={<Mail />}
-              LabelName={"Email"}
+              placeholder={"catégorie"}
+              icon={<BookMinus />}
+              LabelName={"catégorie"}
             />
             <Input
-              type="tel"
-              name={"telephone"}
-              value={membreUpdated.telephone}
+              type="number"
+              name={"prix"}
+              value={PfUpdated.prix}
               onChange={handleChange}
-              placeholder={"Telephone"}
-              icon={<Phone />}
-              LabelName={"Telephone"}
+              placeholder={"Prix"}
+              icon={<CircleDollarSign />}
+              LabelName={"Prix"}
+            />
+            <Input
+              type="number"
+              name={"stock"}
+              value={PfUpdated.stock}
+              onChange={handleChange}
+              placeholder={"Stock"}
+              icon={<Warehouse />}
+              LabelName={"Stock"}
             />
 
             <div>
               <select
-                name="status"
-                value={membreUpdated.status}
+                name="statut"
+                value={PfUpdated.statut}
                 onChange={handleChange}
                 className="
                   w-full
@@ -85,8 +106,8 @@ const FormUpdateMembre = ({ membreData, onClose }) => {
                   pl-10
                 "
               >
-                <option value="active">Active</option>
-                <option value="NoActive">No active</option>
+                <option value="disponible">Disponible</option>
+                <option value="indisponible">Indisponible</option>
               </select>
             </div>
             <div>
@@ -161,4 +182,4 @@ const FormUpdateMembre = ({ membreData, onClose }) => {
   );
 };
 
-export default FormUpdateMembre;
+export default FormUpdateProduitFini;

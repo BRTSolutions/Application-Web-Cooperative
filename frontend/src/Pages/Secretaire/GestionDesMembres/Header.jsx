@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HeaderIcon from "../../../components/HeaderIcon";
-import { Users, Search } from "lucide-react"; // Added Search icon
+import { Users, Search } from "lucide-react";
 import FormMembre from "./FormAddMembre";
 
 const Header = () => {

@@ -5,7 +5,7 @@ export const Info = ({ label, value, badge = false, multiline = false }) => (
     {badge ? (
       <span
         className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-          value === "Actif"
+          value === "Actif" || value === "disponible"
             ? "bg-green-100 text-green-700"
             : "bg-red-100 text-red-700"
         }`}
