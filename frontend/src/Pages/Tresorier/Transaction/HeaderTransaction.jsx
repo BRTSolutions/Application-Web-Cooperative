@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Search } from "lucide-react";
-import FormAddProduitFini from "./FormAddProduitFini";
-import { RiProductHuntFill } from "react-icons/ri";
 import HeaderIcon from "../../../components/HeaderIcon";
+import { GrTransaction } from "react-icons/gr";
+import { Search } from "lucide-react";
 
-const HeaderProduitFini = () => {
+const HeaderTransaction = () => {
   const [showForm, setShowForm] = useState(false);
-  const [Pf, setPf] = useState([]);
+  const [Transaction, setTransaction] = useState([]);
 
   useEffect(() => {
-    const fetchPf = async () => {
+    const fetchTransaction = async () => {
       const data = [
         {
           id: 1,
@@ -113,22 +112,22 @@ const HeaderProduitFini = () => {
         },
       ];
 
-      setPf(data);
+      setTransaction(data);
     };
 
-    fetchPf();
+    fetchTransaction();
   }, []);
   return (
     <div className="mt-5">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div className="flex gap-5 items-center">
-          <HeaderIcon icon={RiProductHuntFill} />
+          <HeaderIcon icon={GrTransaction} />
           <div className="flex flex-col">
             <h1 className="font-semibold text-2xl md:text-3xl">
-              Gestion des produits finis
+              Gestion des Transactions
             </h1>
             <p className="text-gray-500 text-md">
-              {Pf.length} produits finis enregistrés
+              {Transaction.length} Transactions enregistrés
             </p>
           </div>
         </div>
@@ -163,9 +162,9 @@ const HeaderProduitFini = () => {
         </div>
       </div>
 
-      {showForm && <FormAddProduitFini onClose={() => setShowForm(false)} />}
+      {/* {showForm && <FormAddProduitFini onClose={() => setShowForm(false)} />} */}
     </div>
   );
 };
 
-export default HeaderProduitFini;
+export default HeaderTransaction;

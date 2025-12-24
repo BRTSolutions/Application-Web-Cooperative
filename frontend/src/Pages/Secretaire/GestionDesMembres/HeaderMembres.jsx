@@ -3,7 +3,7 @@ import HeaderIcon from "../../../components/HeaderIcon";
 import { Users, Search } from "lucide-react";
 import FormMembre from "./FormAddMembre";
 
-const Header = () => {
+const HeaderMembres = () => {
   const [showForm, setShowForm] = useState(false);
   const [membres, setMembres] = useState([]);
 
@@ -126,4 +126,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderMembres ;

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import FormAddProduct from "./FormAddProduct";
+import { FaProductHunt } from "react-icons/fa";
+import HeaderIcon from "../../../components/HeaderIcon";
 
 const HeaderProduit = () => {
   const [showForm, setShowForm] = useState(false);
@@ -120,6 +122,7 @@ const HeaderProduit = () => {
     <div className="mt-5">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div className="flex gap-5 items-center">
+          <HeaderIcon icon={FaProductHunt} />
           <div className="flex flex-col">
             <h1 className="font-semibold text-2xl md:text-3xl">
               Gestion des produits

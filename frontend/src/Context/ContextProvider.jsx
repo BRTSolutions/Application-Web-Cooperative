@@ -3,15 +3,32 @@ import React, { createContext, useState } from "react";
 export const Context = createContext();
 
 export const ContextProvider = ({ children }) => {
-    const [err,setErr] = useState([])
-    const [allMembres,setAllMembres] = useState([]);
-    const [successMsg, setSuccessMsg] = useState("");
-    const [allProduits, setAllProduits] = useState([]);
-    const [allPf, setAllPf] = useState([])
+  const [err, setErr] = useState([]);
+  const [allMembres, setAllMembres] = useState([]);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [allProduits, setAllProduits] = useState([]);
+  const [allPf, setAllPf] = useState([]);
+  const [Reunions, setReunions] = useState([]);
+  const [allTransaction, setAllTransaction] = useState([]);
 
   return (
     <Context.Provider
-      value={{err,setErr,allMembres,setAllMembres,successMsg, setSuccessMsg,allProduits, setAllProduits,allPf, setAllPf}}
+      value={{
+        err,
+        setErr,
+        allMembres,
+        setAllMembres,
+        successMsg,
+        setSuccessMsg,
+        allProduits,
+        setAllProduits,
+        allPf,
+        setAllPf,
+        Reunions,
+        setReunions,
+        allTransaction,
+        setAllTransaction,
+      }}
     >
       {children}
     </Context.Provider>

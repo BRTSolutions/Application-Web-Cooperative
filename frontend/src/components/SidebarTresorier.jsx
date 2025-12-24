@@ -11,8 +11,9 @@ import {
 
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { TbTransactionDollar } from "react-icons/tb";
 
-const SidebarSecretaire = () => {
+const SidebarTresorier = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
@@ -32,7 +33,7 @@ const SidebarSecretaire = () => {
         ></div>
       )}
 
-      {/* SidebarSecretaire */}
+      {/* SidebarTresorier*/}
       <aside
         className={`h-screen bg-gradient-to-b from-[#0b0b3b] to-[#0a0a2a] text-white flex flex-col justify-between shadow-xl transition-all duration-300 z-50 
           ${isCollapsed ? "w-16" : "w-64"} 
@@ -70,14 +71,14 @@ const SidebarSecretaire = () => {
 
           {!isCollapsed && (
             <div className="mx-4 my-5 rounded-xl bg-white/10 px-4 py-3">
-              <p className="font-semibold">Fatima chokri</p>
-              <p className="text-sm text-white/60">Secrétaire</p>
+              <p className="font-semibold">Ahmed Sabri</p>
+              <p className="text-sm text-white/60">Tresorier</p>
             </div>
           )}
 
           <nav className="mt-4 space-y-2 px-3">
             <Link
-              to={"/secretaire/dashboard"}
+              to={"/tresorier/dashboard"}
               onClick={() => setIsMobileOpen(false)}
             >
               <MenuItem
@@ -88,57 +89,13 @@ const SidebarSecretaire = () => {
               />
             </Link>
             <Link
-              to={"/secretaire/membre"}
+              to={"/tresorier/transaction"}
               onClick={() => setIsMobileOpen(false)}
             >
               <MenuItem
-                icon={<Users size={20} />}
-                text="Membres"
-                pageName={"membre"}
-                isCollapsed={isCollapsed}
-              />
-            </Link>
-            <Link
-              to={"/secretaire/produits"}
-              onClick={() => setIsMobileOpen(false)}
-            >
-              <MenuItem
-                icon={<Package size={20} />}
-                text="Produits"
-                pageName={"produits"}
-                isCollapsed={isCollapsed}
-              />
-            </Link>
-            <Link
-              to={"/secretaire/produits_finis"}
-              onClick={() => setIsMobileOpen(false)}
-            >
-              <MenuItem
-                icon={<Package size={20} />}
-                text="Produits finis"
-                pageName={"produits_finis"}
-                isCollapsed={isCollapsed}
-              />
-            </Link>
-            <Link
-              to={"/secretaire/reunions"}
-              onClick={() => setIsMobileOpen(false)}
-            >
-              <MenuItem
-                icon={<CalendarCheck size={20} />}
-                text="Réunions"
-                pageName={"reunions"}
-                isCollapsed={isCollapsed}
-              />
-            </Link>
-            <Link
-              to={"/secretaire/profil"}
-              onClick={() => setIsMobileOpen(false)}
-            >
-              <MenuItem
-                icon={<User size={20} />}
-                text="Profil"
-                pageName={"profil"}
+                icon={<TbTransactionDollar size={20} />}
+                text="Tableau des transactions"
+                pageName={"transaction"}
                 isCollapsed={isCollapsed}
               />
             </Link>
@@ -162,7 +119,7 @@ const SidebarSecretaire = () => {
   );
 };
 
-export default SidebarSecretaire;
+export default SidebarTresorier;
 
 function MenuItem({ icon, text, pageName, isCollapsed }) {
   const location = useLocation();
@@ -170,7 +127,7 @@ function MenuItem({ icon, text, pageName, isCollapsed }) {
     <div
       className={`flex items-center justify-between px-4 py-3 rounded-xl cursor-pointer transition
         ${
-          location.pathname === `/secretaire/${pageName}`
+          location.pathname === `/tresorier/${pageName}`
             ? "bg-gradient-to-r from-cyan-400 to-teal-400 text-white font-semibold shadow-lg"
             : "text-white/70 hover:bg-white/10 hover:text-white"
         }`}
@@ -179,7 +136,7 @@ function MenuItem({ icon, text, pageName, isCollapsed }) {
         {icon}
         {!isCollapsed && <span>{text}</span>}
       </div>
-      {location.pathname === `/secretaire/${pageName}` && !isCollapsed && (
+      {location.pathname === `/tresorier/${pageName}` && !isCollapsed && (
         <span>{">"}</span>
       )}
     </div>

@@ -8,6 +8,8 @@ import Produits from "./Pages/Secretaire/GestionDesProduits/Produits";
 import Reunions from "./Pages/Secretaire/GestionsDesReunions/Reunions";
 import Profil from "./Pages/Secretaire/Profil/Profil";
 import ProduuitFinis from "./Pages/Secretaire/GestionDesProduitsFini/ProduitsFinis";
+import TresorierLayout from "./Layout/TresorierLayout";
+import Transaction from "./Pages/Tresorier/Transaction/Transaction";
 
 function App() {
   return (
@@ -24,6 +26,15 @@ function App() {
             <Route path="reunions" element={<Reunions/>}/>
             <Route path="profil" element={<Profil/>}/>
             </Route>
+
+
+            <Route path="/tresorier" element={<TresorierLayout/>}>
+            {/* <Route path="dashboard" element={<Dashboard/>}/> */}
+            <Route path="transaction" element={<Transaction/>}/>
+            </Route>
+
+
+            
           </Routes>
         </ContextProvider>
       </BrowserRouter>

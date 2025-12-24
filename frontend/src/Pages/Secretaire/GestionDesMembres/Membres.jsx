@@ -1,11 +1,11 @@
 import React from 'react'
-import Header from './Header'
 import MembresTable from './MembresTable'
+import HeaderMembres from './HeaderMembres'
 
 const Membres = () => {
   return (
     <div>
-      <Header/>
+      <HeaderMembres/>
       <div className='m-20'><MembresTable/></div>
       
     </div>
